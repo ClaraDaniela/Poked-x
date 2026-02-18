@@ -51,6 +51,25 @@ const imagenByType = {
   fairy: "/Poked-x/tipos/Tipo_hada_icono_EP.svg",
   unknown: "",
   shadow: ""
+};
+
+const natureEffects = {
+  adamant: { up: "attack", down: "special-attack" },
+  modest: { up: "special-attack", down: "attack" },
+  jolly: { up: "speed", down: "special-attack" },
+  timid: { up: "speed", down: "attack" },
+  bold: { up: "defense", down: "attack" },
+  calm: { up: "special-defense", down: "attack" },
+  impish: { up: "defense", down: "special-attack" },
+  careful: { up: "special-defense", down: "special-attack" },
+  rash: { up: "special-attack", down: "special-defense" },
+  lonely: { up: "attack", down: "defense" },
+  naughty: { up: "attack", down: "special-defense" },
+  mild: { up: "special-attack", down: "defense" },
+  gentle: { up: "special-defense", down: "defense" },
+  hasty: { up: "speed", down: "defense" },
+  naive: { up: "speed", down: "special-defense" }
 }
 
-export { colorByType, colorByStat, imagenByType };
+
+export { colorByType, colorByStat, imagenByType, natureEffects };

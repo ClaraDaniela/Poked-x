@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { colorByStat, colorByType, imagenByType } from "../constants/pokemon";
+import { colorByStat, colorByType, imagenByType, natureEffects } from "../constants/pokemon";
 import Evolutions from "./Evolutions";
 
 const PokemonDetail = ({ pokemon }) => {
@@ -27,7 +27,41 @@ const PokemonDetail = ({ pokemon }) => {
         }
 
         fetchTypeData()
-    }, [pokemon])
+    }, [pokemon]);
+
+    const getBestNature = (stats = []) => {
+        if (!stats.length) return "Hardy"
+
+        const getStat = (name) =>
+            stats.find(s => s.name === name)?.base_stat ?? 0
+
+        const attack = getStat("ATK")
+        const spAttack = getStat("SpA")
+        const speed = getStat("SPD")
+        const defense = getStat("DEF")
+        const spDefense = getStat("SpD")
+
+        if (attack > spAttack) {
+            return speed >= 80
+                ? "Jolly (+Speed, -SpA)"
+                : "Adamant (+Attack, -SpA)"
+        }
+
+        if (spAttack > attack) {
+            return speed >= 80
+                ? "Timid (+Speed, -Attack)"
+                : "Modest (+SpA, -Attack)"
+        }
+
+        if (defense > attack && defense > spAttack)
+            return "Bold (+Defense, -Attack)"
+
+        if (spDefense > attack && spDefense > spAttack)
+            return "Calm (+SpDef, -Attack)"
+
+        return "Hardy"
+    }
+
 
     return (
         <>
@@ -38,7 +72,9 @@ const PokemonDetail = ({ pokemon }) => {
                 <span className="text-slate-400 text-sm font-semibold">
                     N° {pokemon?.id}
                 </span>
-                <h2 className="font-bold text-2xl capitalize">{pokemon?.name}</h2>
+                <h2 className="text-lg">
+                    {pokemon?.name === "muk" ? "Marcelo" : pokemon?.name}
+                </h2>
                 <ul className="flex gap-2 justify-center">
                     {pokemon?.types?.map((type) => (
                         <li
@@ -97,6 +133,14 @@ const PokemonDetail = ({ pokemon }) => {
                         ))}
                     </ul>
                 </section>
+                {/* Naturaleza */}
+                <section className="grid gap-2">
+                    <h4 className="font-bold capitalize">Naturaleza recomendada según los stats</h4>
+                    <span className="bg-slate-100 block rounded-full p-2 capitalize text-center">
+                        {getBestNature(pokemon?.stats || [])}
+                    </span>
+                </section>
+
                 {/* imagenes de tipos */}
                 <section className="grid gap-4">
                     {pokemon?.types?.map((typeName) => {

@@ -27,9 +27,15 @@ const PokemonPreview = ({ pokemonURL, onClick }) => {
                 <img className='absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 group-hover:scale-110 transition-transform pixelated' src={
                     pokemon?.sprites.versions["generation-v"]?.["black-white"]?.front_default
                 } alt="" />
+                <img className='absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 group-hover:scale-110 transition-transform pixelated' src={
+                    pokemon?.sprites.versions["generation-v"]?.["black-white"]?.front_female
+                } alt="" />
             </header>
             <span className='text-sm text-slate-400' >N° {pokemon?.id}</span>
-            <h4 className='text-lg' >{pokemon?.name}</h4>
+            <h4 className="text-lg">
+                {pokemon?.name === "muk" ? "Marcelo" : pokemon?.name}
+            </h4>
+
             <ul className='flex gap-2 justify-center' >
                 {pokemon?.types.map((type) => (
                     <li key={type.type.name} className={`p-1 rounded-md px-2 text-black text-sm bg-white flex flex-col items-center justify-center gap-1`}>
